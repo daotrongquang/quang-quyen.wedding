@@ -3233,6 +3233,501 @@
             }
         }
     </style>
+    <style>
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80vh;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+    <style>
+        /* Trigger Area */
+
+        .gift-section-container {
+            text-align: center;
+            padding: 30px 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .gift-box-trigger {
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .gift-box-trigger:active {
+            transform: scale(0.95);
+        }
+
+        .gift-icon-box {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            position: relative;
+            /* Animation Rung lắc */
+            animation: giftShake 2s infinite;
+        }
+
+        .gift-icon-box svg {
+            width: 100%;
+            height: 100%;
+            stroke: #d4a373;
+            /* Màu vàng nâu chủ đạo */
+            stroke-width: 1.5;
+        }
+
+        .gift-instruction {
+            font-size: 14px;
+            color: #666;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* Keyframes Animation */
+
+        @keyframes giftShake {
+            0% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(5deg);
+            }
+            50% {
+                transform: rotate(0);
+            }
+            75% {
+                transform: rotate(-5deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        /* Modal Styles */
+
+        .gift-modal {
+            display: none;
+            /* Ẩn mặc định */
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            /* Nền tối mờ */
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .gift-modal-content {
+            background-color: #fff;
+            width: 100%;
+            max-width: 400px;
+            /* Vừa vặn mobile */
+            border-radius: 15px;
+            padding: 30px 20px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            color: #d4a373;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .modal-desc {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 25px;
+        }
+
+        /* Bank Item Styles */
+
+        .bank-item {
+            margin-bottom: 20px;
+        }
+
+        .bank-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .role-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .role-badge.groom {
+            background-color: #557c93;
+        }
+
+        /* Màu xanh chú rể */
+
+        .role-badge.bride {
+            background-color: #d4a373;
+        }
+
+        /* Màu vàng cô dâu */
+
+        .bank-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .qr-wrapper img {
+            width: 120px;
+            height: 120px;
+            border: 1px solid #eee;
+            padding: 5px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .account-info .acc-name {
+            font-weight: bold;
+            font-size: 14px;
+            margin: 5px 0;
+            text-transform: uppercase;
+        }
+
+        .account-info .acc-num {
+            font-size: 16px;
+            letter-spacing: 1px;
+            color: #555;
+            margin: 5px 0 10px 0;
+            background: #f5f5f5;
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 4px;
+            border: 1px dashed #ccc;
+        }
+
+        /* Copy Button */
+
+        .copy-btn {
+            background-color: white;
+            border: 1px solid #d4a373;
+            color: #d4a373;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-btn:hover {
+            background-color: #d4a373;
+            color: white;
+        }
+
+        .copy-btn.copied {
+            background-color: #4CAF50;
+            /* Màu xanh lá khi copy thành công */
+            border-color: #4CAF50;
+            color: white;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #eee;
+            margin: 20px 0;
+            width: 80%;
+            margin-left: 10%;
+        }
+    </style>
+    <style>
+        :root {
+            --rose-color: #f43f5e;
+            --rose-hover: #e11d48;
+            --bg-glass: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Bỏ cuộn trang khi chưa mở thiệp */
+
+        body.locked-scroll {
+            overflow: hidden !important;
+        }
+
+        /* 1. MÀN HÌNH CHÀO (OVERLAY) */
+
+        #wedding-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background: radial-gradient(circle, #fff5f5 0%, #fffefd 100%);
+            z-index: 2147483647 !important;
+            /* Mức cao nhất của trình duyệt */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .open-btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: var(--rose-color);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* 2. SỔ LƯU BÚT (STIKY BOTTOM LEFT + TOGGLE) */
+
+        #wedding-wishes-container {
+            position: fixed !important;
+            bottom: 20px !important;
+            left: 20px !important;
+            z-index: 2147483646 !important;
+            width: 280px;
+            background-color: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid #ffe4e6;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        #wedding-wishes-container.is-minimized {
+            transform: translateY(calc(100% - 45px)) !important;
+        }
+
+        .wishes-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--rose-color);
+            margin-bottom: 8px;
+            border-bottom: 1px dashed #fecdd3;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-wishes {
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0 5px;
+            user-select: none;
+        }
+
+        .wishes-scroll-area {
+            height: 80px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #wishes-list {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .wish-item {
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        /* 3. NÚT NHẠC (BOTTOM RIGHT) */
+
+        #wedding-music-container {
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 20px !important;
+            z-index: 2147483646 !important;
+        }
+
+        .music-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--bg-glass);
+            color: var(--rose-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid #ffe4e6;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .is-spinning {
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .is-paused {
+            animation-play-state: paused;
+            opacity: 0.6;
+        }
+
+        /* 4. TIM RƠI */
+
+        .heart-falling {
+            position: fixed !important;
+            top: -5vh !important;
+            z-index: 2147483645 !important;
+            pointer-events: none;
+            will-change: transform;
+            animation: heartFall linear forwards;
+        }
+
+        @keyframes heartFall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #wedding-wishes-container {
+                width: 220px;
+                left: 10px !important;
+                bottom: 10px !important;
+            }
+            #wedding-music-container {
+                bottom: 10px !important;
+                right: 10px !important;
+            }
+            .music-text {
+                display: none;
+            }
+        }
+    </style>
+    <style>
+        /* CSS định nghĩa trạng thái ẩn và hiện */
+
+        .mh-fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            /* Bắt đầu thấp hơn 40px */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+        /* Lớp này sẽ được JS thêm vào khi người dùng cuộn tới */
+
+        .mh-fade-in.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Vô hiệu hóa hiệu ứng trên thiết bị ưu tiên giảm chuyển động (Accessibility) */
+
+        @media (prefers-reduced-motion: reduce) {
+            .mh-fade-in {
+                transition: none;
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
     <link rel="preload" as="style" id="et-core-unified-deferred-6-cached-inline-styles" href="./wp-content/et-cache/6/et-core-unified-deferred-6.min.css?ver=1771519082" onload="this.onload=null;this.rel='stylesheet';" />
     <style id='global-styles-inline-css' type='text/css'>
         :root {
@@ -3620,136 +4115,58 @@
     </style>
     <link rel='stylesheet' id='elicus-swiper-style-css' href='./wp-content/plugins/divi-plus/includes/assets/css/swiper/swiper.min.css?ver=6.4.5' type='text/css' media='' />
     <link rel='stylesheet' id='wp-block-library-css' href='./wp-includes/css/dist/block-library/style.min.css?ver=6.9.1' type='text/css' media='none' onload="media='all'" />
-    <style id='wp-block-library-inline-css' type='text/css'>
-        /*wp_block_styles_on_demand_placeholder:69973c78dc716*/
-
-        /*# sourceURL=wp-block-library-inline-css */
-    </style>
-
 </head>
 
 <body class="home wp-singular page-template page-template-page-template-blank page-template-page-template-blank-php page page-id-6 wp-theme-Divi et_pb_button_helper_class et_cover_background et_pb_gutter osx et_pb_gutters2 et_pb_pagebuilder_layout et_no_sidebar et_divi_theme et-db">
     <div id="page-container">
-
         <div id="main-content">
-
-
-
             <article id="post-6" class="post-6 page type-page status-publish has-post-thumbnail hentry">
-
-
                 <div class="entry-content">
                     <div class="et-l et-l--post">
                         <div class="et_builder_inner_content et_pb_gutters2">
                             <div class="et_pb_section et_pb_section_0 et_pb_with_background et_section_regular">
-
-
-
-
-
-
                                 <div class="et_pb_row et_pb_row_0">
                                     <div class="et_pb_column et_pb_column_4_4 et_pb_column_0  et_pb_css_mix_blend_mode_passthrough et-last-child">
-
-
-
-
                                         <div class="et_pb_module et_pb_text et_pb_text_0  et_pb_text_align_center et_pb_bg_layout_light">
-
-
-
-
                                             <div class="et_pb_text_inner">
                                                 <p>SAVE THE DATE</p>
                                             </div>
                                         </div>
                                         <div class="et_pb_module et_pb_image et_pb_image_0">
-
-
-
-
                                             <span class="et_pb_image_wrap "><img fetchpriority="high" decoding="async" width="289" height="223" src="./wp-content/uploads/2026/02/love.png" alt="" title="image 29" class="wp-image-89" /></span>
                                         </div>
                                         <div class="et_pb_module et_pb_image et_pb_image_1 et_pb_image_sticky">
-
-
-
-
                                             <span class="et_pb_image_wrap has-box-shadow-overlay"><div class="box-shadow-overlay"></div><img loading="lazy" decoding="async" width="1707" height="2560" src="./wp-content/uploads/2026/02/LCA_1283.JPG" alt="" title="7" srcset="./wp-content/uploads/2026/02/LCA_1283.JPG 1707w, ./wp-content/uploads/2026/02/LCA_1359.JPG 1280w, ./wp-content/uploads/2026/02/LCA_1359.JPG 980w, ./wp-content/uploads/2026/02/LCA_1359.JPG 480w" sizes="auto, (min-width: 0px) and (max-width: 480px) 480px, (min-width: 481px) and (max-width: 980px) 980px, (min-width: 981px) and (max-width: 1280px) 1280px, (min-width: 1281px) 1707px, 100vw" class="wp-image-28" /></span>
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
-
-
                             </div>
                             <div class="et_pb_section et_pb_section_1 et_section_regular">
-
-
-
-
-
-
                                 <div class="et_pb_row et_pb_row_1">
                                     <div class="et_pb_column et_pb_column_4_4 et_pb_column_1  et_pb_css_mix_blend_mode_passthrough et-last-child">
-
-
-
-
                                         <div class="et_pb_module et_pb_image et_pb_image_2 et_pb_image_sticky">
-
-
-
-
                                             <span class="et_pb_image_wrap "><img loading="lazy" decoding="async" width="416" height="416" src="./wp-content/uploads/2026/02/codauchure.jpg" alt="" title="istockphoto-1125796406-170667a" srcset="./wp-content/uploads/2026/02/codauchure.jpg 416w, ./wp-content/uploads/2026/02/codauchure.jpg 300w, ./wp-content/uploads/2026/02/codauchure.jpg 150w" sizes="auto, (max-width: 416px) 100vw, 416px" class="wp-image-45" /></span>
                                         </div>
                                         <div class="et_pb_module et_pb_text et_pb_text_1  et_pb_text_align_center et_pb_bg_layout_light">
-
-
-
-
                                             <div class="et_pb_text_inner">
                                                 <h4>WEDDING</h4>
                                             </div>
                                         </div>
                                         <div class="et_pb_module et_pb_image et_pb_image_3 et_pb_image_sticky">
-
-
-
-
                                             <span class="et_pb_image_wrap "><img loading="lazy" decoding="async" width="512" height="256" src="./wp-content/uploads/2026/02/line.png" alt="" title="codauchure.jpg" srcset="./wp-content/uploads/2026/02/line.png 512w, ./wp-content/uploads/2026/02/line.png 480w" sizes="auto, (min-width: 0px) and (max-width: 480px) 480px, (min-width: 481px) 512px, 100vw" class="wp-image-96" /></span>
                                         </div>
                                         <div class="et_pb_module et_pb_text et_pb_text_2  et_pb_text_align_center et_pb_bg_layout_light">
-
-
-
-
                                             <div class="et_pb_text_inner">
                                                 <p>Trọng Quang &amp; Huệ Quyên</p>
                                             </div>
                                         </div>
                                         <div class="et_pb_module dipl_image_card_carousel dipl_image_card_carousel_0  et_pb_text_align_center">
-
-
-
-
-
-
                                             <div class="et_pb_module_inner">
                                                 <div class="dipl_swiper_wrapper">
                                                     <div class="dipl_image_card_carousel_layout dipl_swiper_inner_wrap">
                                                         <div class="swiper-container">
                                                             <div class="swiper-wrapper">
                                                                 <div class="et_pb_with_border et_pb_module dipl_image_card_carousel_item dipl_image_card_carousel_item_0  et_pb_bg_layout_light dipl_image_card_carousel_slide swiper-slide">
-
-
-
-
-
-
                                                                     <div class="et_pb_module_inner">
                                                                         <div class="dipl_image_card_wrapper">
                                                                             <div class="dipl_image_card_content_wrapper">
@@ -3767,12 +4184,6 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="et_pb_module dipl_image_card_carousel_item dipl_image_card_carousel_item_1  et_pb_bg_layout_light dipl_image_card_carousel_slide swiper-slide">
-
-
-
-
-
-
                                                                     <div class="et_pb_module_inner">
                                                                         <div class="dipl_image_card_wrapper">
                                                                             <div class="dipl_image_card_content_wrapper">
@@ -3797,82 +4208,24 @@
                                                     <!-- dipl_image_card_carousel_layout -->
                                                 </div>
                                                 <!-- dipl_swiper_wrapper -->
-                                                <script type="text/javascript">
-                                                    jQuery(function($) {
-                                                        var dipl_image_card_carousel_0_swiper = new Swiper('.dipl_image_card_carousel_0 .swiper-container', {
-                                                            slidesPerView: 2,
-                                                            autoplay: 0,
-                                                            spaceBetween: 5,
-                                                            slidesPerGroup: 1,
-                                                            slidesPerGroupSkip: 1,
-                                                            effect: "slide",
-                                                            cubeEffect: false,
-                                                            coverflowEffect: false,
-                                                            speed: 1000,
-                                                            loop: false,
-                                                            pagination: false,
-                                                            navigation: false,
-                                                            grabCursor: 'true',
-                                                            breakpoints: {
-                                                                981: {
-                                                                    slidesPerView: 2,
-                                                                    spaceBetween: 5,
-                                                                    slidesPerGroup: 1,
-                                                                    slidesPerGroupSkip: 1,
-                                                                },
-                                                                768: {
-                                                                    slidesPerView: 2,
-                                                                    spaceBetween: 5,
-                                                                    slidesPerGroup: 1,
-                                                                    slidesPerGroupSkip: 1,
-                                                                },
-                                                                0: {
-                                                                    slidesPerView: 2,
-                                                                    spaceBetween: 5,
-                                                                    slidesPerGroup: 1,
-                                                                    slidesPerGroupSkip: 1,
-                                                                }
-                                                            },
-                                                        });
-                                                        dipl_image_card_carousel_0_swiper.on('reachEnd', function() {
-                                                            dipl_image_card_carousel_0_swiper.autoplay = false;
-                                                        });
-                                                    });
-                                                </script>
                                             </div>
                                         </div>
                                         <div class="et_pb_module et_pb_divider et_pb_divider_0 et_pb_divider_position_ et_pb_space">
                                             <div class="et_pb_divider_internal"></div>
                                         </div>
                                         <div class="et_pb_module et_pb_text et_pb_text_3  et_pb_text_align_center et_pb_bg_layout_light">
-
-
-
-
                                             <div class="et_pb_text_inner">
                                                 <h4>Thân mời Quý Khách</h4>
                                                 <p>Tới Tham Dự Lễ Thành Hôn Của Chúng Tôi</p>
                                             </div>
                                         </div>
                                         <div class="et_pb_module dipl_image_card_carousel dipl_image_card_carousel_1  et_pb_text_align_left">
-
-
-
-
-
-
                                             <div class="et_pb_module_inner">
                                                 <div class="dipl_swiper_wrapper">
                                                     <div class="dipl_image_card_carousel_layout dipl_swiper_inner_wrap">
                                                         <div class="swiper-container">
                                                             <div class="swiper-wrapper">
                                                                 <div class="et_pb_module dipl_image_card_carousel_item dipl_image_card_carousel_item_2  et_pb_bg_layout_light dipl_image_card_carousel_slide swiper-slide">
-
-
-
-
-
-
                                                                     <div class="et_pb_module_inner">
                                                                         <div class="dipl_image_card_wrapper">
                                                                             <div class="dipl_image_card_image_wrapper"><img decoding="async" src="./wp-content/uploads/2026/02/LCA_1379.JPG" alt="" srcset="./wp-content/uploads/2026/02/LCA_1379.JPG 1708w, ./wp-content/uploads/2026/02/LCA_1379.JPG 1280w, ./wp-content/uploads/2026/02/LCA_1379.JPG 980w, ./wp-content/uploads/2026/02/LCA_1379.JPG 480w"
@@ -3882,12 +4235,6 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="et_pb_module dipl_image_card_carousel_item dipl_image_card_carousel_item_3  et_pb_bg_layout_light dipl_image_card_carousel_slide swiper-slide">
-
-
-
-
-
-
                                                                     <div class="et_pb_module_inner">
                                                                         <div class="dipl_image_card_wrapper">
                                                                             <div class="dipl_image_card_image_wrapper"><img decoding="async" src="./wp-content/uploads/2026/02/LCA_1166.JPG" alt="" srcset="./wp-content/uploads/2026/02/LCA_1166.JPG 1707w, ./wp-content/uploads/2026/02/LCA_1166.JPG 1280w, ./wp-content/uploads/2026/02/LCA_1166.JPG 980w, ./wp-content/uploads/2026/02/LCA_1166.JPG 480w"
@@ -3897,12 +4244,6 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="et_pb_module dipl_image_card_carousel_item dipl_image_card_carousel_item_4  et_pb_bg_layout_light dipl_image_card_carousel_slide swiper-slide">
-
-
-
-
-
-
                                                                     <div class="et_pb_module_inner">
                                                                         <div class="dipl_image_card_wrapper">
                                                                             <div class="dipl_image_card_image_wrapper"><img decoding="async" src="./wp-content/uploads/2026/02/LCA_1359.JPG" alt="" srcset="./wp-content/uploads/2026/02/LCA_1359.JPG 1698w, ./wp-content/uploads/2026/02/LCA_1359.JPG 1280w, ./wp-content/uploads/2026/02/LCA_1359.JPG 980w, ./wp-content/uploads/2026/02/LCA_1359.JPG 480w"
@@ -3918,58 +4259,9 @@
                                                     </div>
                                                     <!-- dipl_image_card_carousel_layout -->
                                                 </div>
-                                                <!-- dipl_swiper_wrapper -->
-                                                <script type="text/javascript">
-                                                    jQuery(function($) {
-                                                        var dipl_image_card_carousel_1_swiper = new Swiper('.dipl_image_card_carousel_1 .swiper-container', {
-                                                            slidesPerView: 3,
-                                                            autoplay: 0,
-                                                            spaceBetween: 10,
-                                                            slidesPerGroup: 1,
-                                                            slidesPerGroupSkip: 2,
-                                                            effect: "slide",
-                                                            cubeEffect: false,
-                                                            coverflowEffect: false,
-                                                            speed: 1000,
-                                                            loop: false,
-                                                            pagination: false,
-                                                            navigation: false,
-                                                            grabCursor: 'true',
-                                                            breakpoints: {
-                                                                981: {
-                                                                    slidesPerView: 3,
-                                                                    spaceBetween: 10,
-                                                                    slidesPerGroup: 1,
-                                                                    slidesPerGroupSkip: 2,
-                                                                },
-                                                                768: {
-                                                                    slidesPerView: 2,
-                                                                    spaceBetween: 10,
-                                                                    slidesPerGroup: 1,
-                                                                    slidesPerGroupSkip: 1,
-                                                                },
-                                                                0: {
-                                                                    slidesPerView: 3,
-                                                                    spaceBetween: 10,
-                                                                    slidesPerGroup: 1,
-                                                                    slidesPerGroupSkip: 2,
-                                                                }
-                                                            },
-                                                        });
-                                                        dipl_image_card_carousel_1_swiper.on('reachEnd', function() {
-                                                            dipl_image_card_carousel_1_swiper.autoplay = false;
-                                                        });
-                                                    });
-                                                </script>
                                             </div>
                                         </div>
                                         <div class="et_pb_module dipl_text_highlighter dipl_text_highlighter_0">
-
-
-
-
-
-
                                             <div class="et_pb_module_inner">
                                                 <div class="dipl_text_highlighter_wrapper dipl_highlighter_text dipl_highlight_double_underline "><span class="dipl_text_highlighter_pre_inner_wrapper">Vào hồi &nbsp;</span><span class="dipl_text_highlighter_inner_wrapper"><span class="dipl_text_highlighted_content">10h00 - Thứ Hai</span>
                                                     <?xml version="1.0" encoding="utf-8"?>
@@ -3980,44 +4272,22 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
                                 <div class="et_pb_row et_pb_row_2">
                                     <div class="et_pb_column et_pb_column_4_4 et_pb_column_2  et_pb_css_mix_blend_mode_passthrough et-last-child">
-
-
-
-
                                         <div class="et_pb_module et_pb_text et_pb_text_4  et_pb_text_align_center et_pb_bg_layout_light">
-
-
-
-
                                             <div class="et_pb_text_inner">
                                                 <p>Tức ngày 12/02/2026 Âm Lịch</p>
                                             </div>
                                         </div>
                                         <div class="et_pb_module et_pb_text et_pb_text_5  et_pb_text_align_center et_pb_bg_layout_light">
-
-
-
-
                                             <div class="et_pb_text_inner">
                                                 <h4>Tại tư gia nhà trai</h4>
                                                 <p>Thôn Chùa, Xã Đa Phúc, Thành Phố Hà Nội</p>
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
-
-
                             </div>
                             <div class="et_pb_section et_pb_section_2 et_section_regular">
                                 <div class="et_pb_row et_pb_row_3">
@@ -4129,29 +4399,11 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                             <div class="et_pb_section et_pb_section_7 et_section_regular">
-
-
-
-
-
-
                                 <div class="et_pb_row et_pb_row_8">
                                     <div class="et_pb_column et_pb_column_4_4 et_pb_column_8  et_pb_css_mix_blend_mode_passthrough et-last-child">
-
-
-
-
                                         <div class="et_pb_with_border et_pb_module dipl_masonry_gallery dipl_masonry_gallery_0">
-
-
-
-
-
-
                                             <div class="et_pb_module_inner">
                                                 <div class="dipl_masonry_gallery_wrapper">
                                                     <div class="dipl_masonry_gallery_item_gutter"></div>
@@ -4202,93 +4454,46 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
-
-
                             </div>
                             <div class="et_pb_section et_pb_section_8 et_section_regular">
-
-
-
-
-
-
                                 <div class="et_pb_row et_pb_row_9">
                                     <div class="et_pb_column et_pb_column_4_4 et_pb_column_9  et_pb_css_mix_blend_mode_passthrough et-last-child">
-
-
-
-
                                         <div class="et_pb_module et_pb_text et_pb_text_14  et_pb_text_align_center et_pb_bg_layout_light">
-
-
-
-
                                             <div class="et_pb_text_inner">
                                                 <p>Mời bạn tới dự lễ thành hôn của chúng mình<br />Để cùng chứng kiến khoảnh khắc thiêng liêng nhất</p>
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
-
-
                             </div>
                             <div class="et_pb_section et_pb_section_9 et_pb_with_background et_section_regular">
-
-
-
-
-
-
                                 <div class="et_pb_row et_pb_row_10">
                                     <div class="et_pb_column et_pb_column_4_4 et_pb_column_10  et_pb_css_mix_blend_mode_passthrough et-last-child">
-
-
-
-
                                         <div class="et_pb_module et_pb_text et_pb_text_15  et_pb_text_align_center et_pb_bg_layout_light">
-
-
-
-
                                             <div class="et_pb_text_inner">
                                                 <h4>Hộp quà yêu thương</h4>
                                                 <p><span style="font-size: large;">Cảm ơn bạn đã đồng hành và chúc phúc cho hành trình yêu thương của chúng mình. Niềm vui hôm nay trọn vẹn hơn khi có bạn cùng sẻ chia !!!</span></p>
                                             </div>
                                         </div>
                                         <div class="et_pb_module et_pb_code et_pb_code_0">
-
-
-
-
                                             <div class="et_pb_code_inner">
-                                                <!-- 1. HTML: Cấu trúc Hộp quà và Popup -->
                                                 <div class="gift-section-container">
-
                                                     <!-- Nút mở hộp quà (Hiển thị mặc định) -->
                                                     <div class="gift-box-trigger" onclick="openGiftModal()">
                                                         <div class="gift-icon-box">
                                                             <!-- Icon SVG Hộp quà -->
                                                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 12V22H4V12" stroke="#d4a373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M22 7H2V12H22V7Z" stroke="#d4a373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 22V7" stroke="#d4a373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 7H7.5C6.83696 7 6.20107 6.73661 5.73223 6.26777C5.26339 5.79893 5 5.16304 5 4.5C5 3.83696 5.26339 3.20107 5.73223 2.73223C6.20107 2.26339 6.83696 2 7.5 2C11 2 12 7 12 7Z" stroke="#d4a373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 7H16.5C17.163 7 17.7989 6.73661 18.2678 6.26777C18.7366 5.79893 19 5.16304 19 4.5C19 3.83696 18.7366 3.20107 18.2678 2.73223C17.7989 2.26339 17.163 2 16.5 2C13 2 12 7 12 7Z" stroke="#d4a373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+                                                                <path d="M20 12V22H4V12" stroke="#d4a373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                <path d="M22 7H2V12H22V7Z" stroke="#d4a373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                <path d="M12 22V7" stroke="#d4a373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                <path d="M12 7H7.5C6.83696 7 6.20107 6.73661 5.73223 6.26777C5.26339 5.79893 5 5.16304 5 4.5C5 3.83696 5.26339 3.20107 5.73223 2.73223C6.20107 2.26339 6.83696 2 7.5 2C11 2 12 7 12 7Z" stroke="#d4a373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                <path d="M12 7H16.5C17.163 7 17.7989 6.73661 18.2678 6.26777C18.7366 5.79893 19 5.16304 19 4.5C19 3.83696 18.7366 3.20107 18.2678 2.73223C17.7989 2.26339 17.163 2 16.5 2C13 2 12 7 12 7Z" stroke="#d4a373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                            </svg>
                                                         </div>
                                                         <p class="gift-instruction">Chạm để lấy mã QR & Số tài khoản</p>
                                                     </div>
 
-                                                    <!-- Popup Modal (Mặc định ẩn) -->
                                                     <div id="giftModal" class="gift-modal">
                                                         <div class="gift-modal-content">
                                                             <span class="close-modal" onclick="closeGiftModal()">×</span>
@@ -4307,555 +4512,38 @@
                                                                     <p class="acc-name">CÔ DÂU & CHÚ RỂ</p>
                                                                     <p class="acc-num" id="accNumGroom">10637407</p>
                                                                     <button class="copy-btn" onclick="copyToClipboard('accNumGroom', this)">
-                        <span class="icon">📋</span> COPY STK
-                    </button>
+                                                                        <span class="icon">📋</span> COPY STK
+                                                                    </button>
                                                                 </div>
                                                             </div>
 
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <style>
-                                                    /* Trigger Area */
-
-                                                    .gift-section-container {
-                                                        text-align: center;
-                                                        padding: 30px 10px;
-                                                        font-family: 'Montserrat', sans-serif;
-                                                    }
-
-                                                    .gift-box-trigger {
-                                                        cursor: pointer;
-                                                        display: inline-block;
-                                                        transition: transform 0.2s;
-                                                    }
-
-                                                    .gift-box-trigger:active {
-                                                        transform: scale(0.95);
-                                                    }
-
-                                                    .gift-icon-box {
-                                                        width: 80px;
-                                                        height: 80px;
-                                                        margin: 0 auto 15px;
-                                                        position: relative;
-                                                        /* Animation Rung lắc */
-                                                        animation: giftShake 2s infinite;
-                                                    }
-
-                                                    .gift-icon-box svg {
-                                                        width: 100%;
-                                                        height: 100%;
-                                                        stroke: #d4a373;
-                                                        /* Màu vàng nâu chủ đạo */
-                                                        stroke-width: 1.5;
-                                                    }
-
-                                                    .gift-instruction {
-                                                        font-size: 14px;
-                                                        color: #666;
-                                                        text-decoration: underline;
-                                                        text-underline-offset: 4px;
-                                                    }
-
-                                                    /* Keyframes Animation */
-
-                                                    @keyframes giftShake {
-                                                        0% {
-                                                            transform: rotate(0deg);
-                                                        }
-                                                        25% {
-                                                            transform: rotate(5deg);
-                                                        }
-                                                        50% {
-                                                            transform: rotate(0);
-                                                        }
-                                                        75% {
-                                                            transform: rotate(-5deg);
-                                                        }
-                                                        100% {
-                                                            transform: rotate(0deg);
-                                                        }
-                                                    }
-
-                                                    /* Modal Styles */
-
-                                                    .gift-modal {
-                                                        display: none;
-                                                        /* Ẩn mặc định */
-                                                        position: fixed;
-                                                        z-index: 9999;
-                                                        left: 0;
-                                                        top: 0;
-                                                        width: 100%;
-                                                        height: 100%;
-                                                        background-color: rgba(0, 0, 0, 0.8);
-                                                        /* Nền tối mờ */
-                                                        backdrop-filter: blur(5px);
-                                                        align-items: center;
-                                                        justify-content: center;
-                                                        padding: 20px;
-                                                        box-sizing: border-box;
-                                                    }
-
-                                                    .gift-modal-content {
-                                                        background-color: #fff;
-                                                        width: 100%;
-                                                        max-width: 400px;
-                                                        /* Vừa vặn mobile */
-                                                        border-radius: 15px;
-                                                        padding: 30px 20px;
-                                                        position: relative;
-                                                        text-align: center;
-                                                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                                                        animation: modalFadeIn 0.3s ease-out;
-                                                        max-height: 90vh;
-                                                        overflow-y: auto;
-                                                    }
-
-                                                    @keyframes modalFadeIn {
-                                                        from {
-                                                            opacity: 0;
-                                                            transform: translateY(20px);
-                                                        }
-                                                        to {
-                                                            opacity: 1;
-                                                            transform: translateY(0);
-                                                        }
-                                                    }
-
-                                                    .close-modal {
-                                                        position: absolute;
-                                                        right: 15px;
-                                                        top: 10px;
-                                                        font-size: 28px;
-                                                        font-weight: bold;
-                                                        color: #aaa;
-                                                        cursor: pointer;
-                                                        line-height: 1;
-                                                    }
-
-                                                    .modal-title {
-                                                        font-family: 'Playfair Display', serif;
-                                                        color: #d4a373;
-                                                        font-size: 24px;
-                                                        margin-bottom: 5px;
-                                                    }
-
-                                                    .modal-desc {
-                                                        font-size: 13px;
-                                                        color: #888;
-                                                        margin-bottom: 25px;
-                                                    }
-
-                                                    /* Bank Item Styles */
-
-                                                    .bank-item {
-                                                        margin-bottom: 20px;
-                                                    }
-
-                                                    .bank-header {
-                                                        display: flex;
-                                                        justify-content: center;
-                                                        align-items: center;
-                                                        gap: 10px;
-                                                        margin-bottom: 10px;
-                                                    }
-
-                                                    .role-badge {
-                                                        padding: 4px 10px;
-                                                        border-radius: 20px;
-                                                        font-size: 11px;
-                                                        font-weight: bold;
-                                                        color: white;
-                                                        text-transform: uppercase;
-                                                    }
-
-                                                    .role-badge.groom {
-                                                        background-color: #557c93;
-                                                    }
-
-                                                    /* Màu xanh chú rể */
-
-                                                    .role-badge.bride {
-                                                        background-color: #d4a373;
-                                                    }
-
-                                                    /* Màu vàng cô dâu */
-
-                                                    .bank-name {
-                                                        font-weight: bold;
-                                                        color: #333;
-                                                    }
-
-                                                    .qr-wrapper img {
-                                                        width: 120px;
-                                                        height: 120px;
-                                                        border: 1px solid #eee;
-                                                        padding: 5px;
-                                                        border-radius: 8px;
-                                                        margin-bottom: 10px;
-                                                    }
-
-                                                    .account-info .acc-name {
-                                                        font-weight: bold;
-                                                        font-size: 14px;
-                                                        margin: 5px 0;
-                                                        text-transform: uppercase;
-                                                    }
-
-                                                    .account-info .acc-num {
-                                                        font-size: 16px;
-                                                        letter-spacing: 1px;
-                                                        color: #555;
-                                                        margin: 5px 0 10px 0;
-                                                        background: #f5f5f5;
-                                                        display: inline-block;
-                                                        padding: 5px 15px;
-                                                        border-radius: 4px;
-                                                        border: 1px dashed #ccc;
-                                                    }
-
-                                                    /* Copy Button */
-
-                                                    .copy-btn {
-                                                        background-color: white;
-                                                        border: 1px solid #d4a373;
-                                                        color: #d4a373;
-                                                        padding: 6px 15px;
-                                                        border-radius: 20px;
-                                                        font-size: 12px;
-                                                        cursor: pointer;
-                                                        transition: all 0.3s;
-                                                        display: inline-flex;
-                                                        align-items: center;
-                                                        gap: 5px;
-                                                    }
-
-                                                    .copy-btn:hover {
-                                                        background-color: #d4a373;
-                                                        color: white;
-                                                    }
-
-                                                    .copy-btn.copied {
-                                                        background-color: #4CAF50;
-                                                        /* Màu xanh lá khi copy thành công */
-                                                        border-color: #4CAF50;
-                                                        color: white;
-                                                    }
-
-                                                    .divider {
-                                                        height: 1px;
-                                                        background-color: #eee;
-                                                        margin: 20px 0;
-                                                        width: 80%;
-                                                        margin-left: 10%;
-                                                    }
-                                                </style>
-
-                                                <!-- 3. JS: Xử lý đóng mở và copy -->
-                                                <script>
-                                                    // Mở Modal
-                                                    function openGiftModal() {
-                                                        document.getElementById("giftModal").style.display = "flex";
-                                                        // Khóa cuộn trang nền
-                                                        document.body.style.overflow = "hidden";
-                                                    }
-
-                                                    // Đóng Modal
-                                                    function closeGiftModal() {
-                                                        document.getElementById("giftModal").style.display = "none";
-                                                        // Mở khóa cuộn trang nền
-                                                        document.body.style.overflow = "auto";
-                                                    }
-
-                                                    // Đóng khi click ra ngoài popup
-                                                    window.onclick = function(event) {
-                                                        var modal = document.getElementById("giftModal");
-                                                        if (event.target == modal) {
-                                                            closeGiftModal();
-                                                        }
-                                                    }
-
-                                                    // Chức năng Copy
-                                                    function copyToClipboard(elementId, btnElement) {
-                                                        // Lấy nội dung số tài khoản
-                                                        var copyText = document.getElementById(elementId).innerText;
-
-                                                        // Sử dụng API Clipboard hiện đại
-                                                        navigator.clipboard.writeText(copyText).then(function() {
-                                                            // Lưu text gốc nút
-                                                            var originalText = btnElement.innerHTML;
-
-                                                            // Đổi giao diện nút thành "Đã copy"
-                                                            btnElement.innerHTML = "✓ Đã copy";
-                                                            btnElement.classList.add("copied");
-
-                                                            // Trả về trạng thái cũ sau 2 giây
-                                                            setTimeout(function() {
-                                                                btnElement.innerHTML = originalText;
-                                                                btnElement.classList.remove("copied");
-                                                            }, 2000);
-                                                        }, function(err) {
-                                                            alert("Lỗi khi copy: " + err);
-                                                        });
-                                                    }
-                                                </script>
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
-
-
                             </div>
                             <div class="et_pb_section et_pb_section_10 et_section_regular">
-
-
-
-
-
-
                                 <div class="et_pb_row et_pb_row_11">
                                     <div class="et_pb_column et_pb_column_4_4 et_pb_column_11  et_pb_css_mix_blend_mode_passthrough et-last-child">
-
-
-
-
                                         <div class="et_pb_module et_pb_image et_pb_image_8 et_pb_image_sticky">
-
-
-
-
                                             <span class="et_pb_image_wrap "><img loading="lazy" decoding="async" width="474" height="172" src="./wp-content/uploads/2026/02/Screenshot-2026-02-19-at-00.40.51.png" alt="" title="Screenshot 2026-02-19 at 00.40.51" srcset="./wp-content/uploads/2026/02/Screenshot-2026-02-19-at-00.40.51.png 474w, ./wp-content/uploads/2026/02/Screenshot-2026-02-19-at-00.40.51.png 300w" sizes="auto, (max-width: 474px) 100vw, 474px" class="wp-image-133" /></span>
                                         </div>
                                         <div class="et_pb_module et_pb_text et_pb_text_16  et_pb_text_align_center et_pb_bg_layout_light">
-
-
-
-
                                             <div class="et_pb_text_inner">
                                                 <p>Trọng Quang &amp; Huệ Quyên</p>
                                             </div>
                                         </div>
                                         <div class="et_pb_module et_pb_image et_pb_image_9 et_pb_image_sticky">
-
-
-
-
                                             <span class="et_pb_image_wrap "><img loading="lazy" decoding="async" width="1698" height="2560" src="./wp-content/uploads/2026/02/LCA_2243.JPG" alt="" title="1" srcset="./wp-content/uploads/2026/02/LCA_2243.JPG 1698w, ./wp-content/uploads/2026/02/LCA_2243.JPG 1280w, ./wp-content/uploads/2026/02/LCA_2243.JPG 980w, ./wp-content/uploads/2026/02/LCA_2243.JPG 480w" sizes="auto, (min-width: 0px) and (max-width: 480px) 480px, (min-width: 481px) and (max-width: 980px) 980px, (min-width: 981px) and (max-width: 1280px) 1280px, (min-width: 1281px) 1698px, 100vw" class="wp-image-30" /></span>
                                         </div>
                                         <div class="et_pb_module et_pb_code et_pb_code_1">
-
-
-
-
                                             <div class="et_pb_code_inner">
-                                                <style>
-                                                    :root {
-                                                        --rose-color: #f43f5e;
-                                                        --rose-hover: #e11d48;
-                                                        --bg-glass: rgba(255, 255, 255, 0.9);
-                                                    }
-
-                                                    /* Bỏ cuộn trang khi chưa mở thiệp */
-
-                                                    body.locked-scroll {
-                                                        overflow: hidden !important;
-                                                    }
-
-                                                    /* 1. MÀN HÌNH CHÀO (OVERLAY) */
-
-                                                    #wedding-overlay {
-                                                        position: fixed !important;
-                                                        top: 0 !important;
-                                                        left: 0 !important;
-                                                        width: 100vw !important;
-                                                        height: 100vh !important;
-                                                        background: radial-gradient(circle, #fff5f5 0%, #fffefd 100%);
-                                                        z-index: 2147483647 !important;
-                                                        /* Mức cao nhất của trình duyệt */
-                                                        display: flex;
-                                                        flex-direction: column;
-                                                        align-items: center;
-                                                        justify-content: center;
-                                                        transition: opacity 0.8s ease, visibility 0.8s;
-                                                        margin: 0 !important;
-                                                        padding: 0 !important;
-                                                    }
-
-                                                    .open-btn {
-                                                        padding: 15px 40px;
-                                                        font-size: 18px;
-                                                        font-weight: bold;
-                                                        color: white;
-                                                        background-color: var(--rose-color);
-                                                        border: none;
-                                                        border-radius: 50px;
-                                                        cursor: pointer;
-                                                        box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
-                                                        animation: pulse 2s infinite;
-                                                    }
-
-                                                    @keyframes pulse {
-                                                        0% {
-                                                            transform: scale(1);
-                                                        }
-                                                        50% {
-                                                            transform: scale(1.05);
-                                                        }
-                                                        100% {
-                                                            transform: scale(1);
-                                                        }
-                                                    }
-
-                                                    /* 2. SỔ LƯU BÚT (STIKY BOTTOM LEFT + TOGGLE) */
-
-                                                    #wedding-wishes-container {
-                                                        position: fixed !important;
-                                                        bottom: 20px !important;
-                                                        left: 20px !important;
-                                                        z-index: 2147483646 !important;
-                                                        width: 280px;
-                                                        background-color: var(--bg-glass);
-                                                        backdrop-filter: blur(10px);
-                                                        border: 1px solid #ffe4e6;
-                                                        border-radius: 12px;
-                                                        padding: 15px;
-                                                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-                                                        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                                                        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                                                    }
-
-                                                    #wedding-wishes-container.is-minimized {
-                                                        transform: translateY(calc(100% - 45px)) !important;
-                                                    }
-
-                                                    .wishes-title {
-                                                        font-size: 13px;
-                                                        font-weight: bold;
-                                                        color: var(--rose-color);
-                                                        margin-bottom: 8px;
-                                                        border-bottom: 1px dashed #fecdd3;
-                                                        padding-bottom: 5px;
-                                                        display: flex;
-                                                        justify-content: space-between;
-                                                        align-items: center;
-                                                    }
-
-                                                    .toggle-wishes {
-                                                        cursor: pointer;
-                                                        font-size: 18px;
-                                                        padding: 0 5px;
-                                                        user-select: none;
-                                                    }
-
-                                                    .wishes-scroll-area {
-                                                        height: 80px;
-                                                        overflow: hidden;
-                                                        position: relative;
-                                                    }
-
-                                                    #wishes-list {
-                                                        position: absolute;
-                                                        width: 100%;
-                                                        top: 0;
-                                                        left: 0;
-                                                    }
-
-                                                    .wish-item {
-                                                        font-size: 13px;
-                                                        color: #4b5563;
-                                                        margin-bottom: 8px;
-                                                        line-height: 1.4;
-                                                    }
-
-                                                    /* 3. NÚT NHẠC (BOTTOM RIGHT) */
-
-                                                    #wedding-music-container {
-                                                        position: fixed !important;
-                                                        bottom: 20px !important;
-                                                        right: 20px !important;
-                                                        z-index: 2147483646 !important;
-                                                    }
-
-                                                    .music-btn {
-                                                        display: flex;
-                                                        align-items: center;
-                                                        gap: 8px;
-                                                        background-color: var(--bg-glass);
-                                                        color: var(--rose-color);
-                                                        padding: 8px 16px;
-                                                        border-radius: 50px;
-                                                        border: 1px solid #ffe4e6;
-                                                        cursor: pointer;
-                                                        transition: 0.3s;
-                                                        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                                                    }
-
-                                                    .is-spinning {
-                                                        animation: spin 3s linear infinite;
-                                                    }
-
-                                                    @keyframes spin {
-                                                        from {
-                                                            transform: rotate(0deg);
-                                                        }
-                                                        to {
-                                                            transform: rotate(360deg);
-                                                        }
-                                                    }
-
-                                                    .is-paused {
-                                                        animation-play-state: paused;
-                                                        opacity: 0.6;
-                                                    }
-
-                                                    /* 4. TIM RƠI */
-
-                                                    .heart-falling {
-                                                        position: fixed !important;
-                                                        top: -5vh !important;
-                                                        z-index: 2147483645 !important;
-                                                        pointer-events: none;
-                                                        will-change: transform;
-                                                        animation: heartFall linear forwards;
-                                                    }
-
-                                                    @keyframes heartFall {
-                                                        to {
-                                                            transform: translateY(105vh) rotate(360deg);
-                                                            opacity: 0;
-                                                        }
-                                                    }
-
-                                                    @media (max-width: 480px) {
-                                                        #wedding-wishes-container {
-                                                            width: 220px;
-                                                            left: 10px !important;
-                                                            bottom: 10px !important;
-                                                        }
-                                                        #wedding-music-container {
-                                                            bottom: 10px !important;
-                                                            right: 10px !important;
-                                                        }
-                                                        .music-text {
-                                                            display: none;
-                                                        }
-                                                    }
-                                                </style>
 
                                                 <div id="wedding-overlay">
-                                                    <img decoding="async" src="./wp-content/uploads/2026/02/LCA_1068.JPG" alt="Avatar" class="overlay-avatar" style="
-    margin-bottom: 40px;
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-">
+                                                    <img decoding="async" src="./wp-content/uploads/2026/02/LCA_1068.JPG" alt="Avatar" class="overlay-avatar" style="margin-bottom: 40px;width: 250px;height: 250px;border-radius: 50%;">
                                                     <h2 style="color: #f43f5e; margin-bottom: 20px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Trọng Quang - Huệ Quyên</h2>
                                                     <p style="
     font-size: 26px;
@@ -4876,298 +4564,348 @@
 
                                                 <div id="wedding-music-container">
                                                     <button id="divi-music-btn" class="music-btn">
-        <span id="divi-music-icon" class="is-spinning is-paused">💿</span>
-        <span id="divi-music-text" class="music-text">Bật Nhạc</span>
-    </button>
+                                                        <span id="divi-music-icon" class="is-spinning is-paused">💿</span>
+                                                        <span id="divi-music-text" class="music-text">Bật Nhạc</span>
+                                                    </button>`
                                                 </div>
 
                                                 <audio id="wedding-audio-player" loop preload="auto">
-<source src="./wp-content/uploads/2026/02/Beautiful-In-White-1.mp3" type="audio/mpeg">
-</audio>
+                                                    <source src="./wp-content/uploads/2026/02/Beautiful-In-White-1.mp3" type="audio/mpeg">
+                                                </audio>
 
-                                                <script>
-                                                    document.addEventListener('DOMContentLoaded', function() {
-                                                        // --- QUAN TRỌNG: Đưa các phần tử ra khỏi Divi Wrapper để tránh lỗi position ---
-                                                        const overlay = document.getElementById('wedding-overlay');
-                                                        const wishesContainer = document.getElementById('wedding-wishes-container');
-                                                        const musicContainer = document.getElementById('wedding-music-container');
-
-                                                        if (overlay) document.body.appendChild(overlay);
-                                                        if (wishesContainer) document.body.appendChild(wishesContainer);
-                                                        if (musicContainer) document.body.appendChild(musicContainer);
-
-                                                        // Khóa cuộn trang ban đầu
-                                                        document.body.classList.add('locked-scroll');
-
-                                                        const audio = document.getElementById('wedding-audio-player');
-                                                        const musicIcon = document.getElementById('divi-music-icon');
-                                                        const musicText = document.getElementById('divi-music-text');
-                                                        let isPlaying = false;
-
-                                                        // 1. NÚT MỞ THIỆP & PHÁT NHẠC
-                                                        document.getElementById('open-wedding-btn').addEventListener('click', function() {
-                                                            // Ẩn Overlay
-                                                            overlay.style.opacity = '0';
-                                                            setTimeout(() => {
-                                                                overlay.style.visibility = 'hidden';
-                                                                overlay.style.display = 'none';
-                                                                document.body.classList.remove('locked-scroll');
-                                                            }, 800);
-
-                                                            // Kích hoạt nhạc
-                                                            audio.currentTime = 38; // Thêm dòng này để nhạc bắt đầu từ giây 11
-                                                            audio.play().then(() => {
-                                                                isPlaying = true;
-                                                                musicIcon.classList.remove('is-paused');
-                                                                musicText.innerText = "Tắt Nhạc";
-                                                            }).catch(e => console.log("Không thể phát nhạc tự động: ", e));
-                                                        });
-
-                                                        // 2. ĐIỀU KHIỂN NHẠC BẰNG TAY
-                                                        document.getElementById('divi-music-btn').addEventListener('click', function() {
-                                                            if (isPlaying) {
-                                                                audio.pause();
-                                                                musicIcon.classList.add('is-paused');
-                                                                musicText.innerText = "Bật Nhạc";
-                                                            } else {
-                                                                audio.play();
-                                                                musicIcon.classList.remove('is-paused');
-                                                                musicText.innerText = "Tắt Nhạc";
-                                                            }
-                                                            isPlaying = !isPlaying;
-                                                        });
-
-                                                        // 3. THU GỌN / MỞ RỘNG SỔ LƯU BÚT
-                                                        const toggleBtn = document.getElementById('wish-toggle-btn');
-                                                        toggleBtn.addEventListener('click', function() {
-                                                            wishesContainer.classList.toggle('is-minimized');
-                                                            toggleBtn.innerText = wishesContainer.classList.contains('is-minimized') ? "+" : "−";
-                                                        });
-
-                                                        // 4. AUTO SCROLL SỔ LƯU BÚT
-                                                        const wishesListDiv = document.getElementById('wishes-list');
-                                                        const scrollArea = document.getElementById('wishes-scroll-area');
-                                                        const preDefinedWishes = [{
-                                                                name: "Chị Phượng",
-                                                                message: "Chúc hai em trăm năm hạnh phúc, sớm sinh quý tử nhé!"
-                                                            },
-                                                            {
-                                                                name: "Chị Nguyệt",
-                                                                message: "Chúc hai em mãi yêu thương, thấu hiểu và đồng hành cùng nhau suốt chặng đường phía trước nhé!"
-                                                            },
-                                                            {
-                                                                name: "Chị Huyền",
-                                                                message: "Chúc em và người thương một cuộc sống hôn nhân thật viên mãn, luôn tràn đầy tiếng cười và hạnh phúc!"
-                                                            },
-                                                            {
-                                                                name: "Em Mẫn",
-                                                                message: "Chúc anh chị luôn hạnh phúc, sớm có tin vui và mãi mãi yêu nhau như thuở ban đầu ạ!"
-                                                            },
-                                                            {
-                                                                name: "Cậu Giang",
-                                                                message: "Chúc cô dâu chú rể mãi mãi yêu thương nhau."
-                                                            },
-                                                            {
-                                                                name: "Nhóm chị em FA",
-                                                                message: "Chúc hai bạn trăm năm tình viên mãn, tụi em xin vía hạnh phúc theo với nha 😄❤️"
-                                                            },
-                                                            {
-                                                                name: "Bạn Hoàn",
-                                                                message: "Chúc mừng hạnh phúc hai bạn! Đám cưới tuyệt vời quá."
-                                                            },
-                                                            {
-                                                                name: "Bạn Hưng",
-                                                                message: "Chúc hai bạn xây dựng gia đình êm ấm, thuận hòa."
-                                                            },
-                                                            {
-                                                                name: "Bạn Dương",
-                                                                message: "Chúc hai bạn trăm năm hạnh phúc."
-                                                            },
-                                                            {
-                                                                name: "Hội bạn thân",
-                                                                message: "Chúc rể mới dâu mới bách niên giai lão nha!!!"
-                                                            },
-                                                            {
-                                                                name: "Nhóm Thiên Thai",
-                                                                message: "Chúc hai bạn trăm năm hạnh phúc, ngọt ngào như những ngày đẹp nhất và luôn nắm tay nhau vượt qua mọi điều!"
-                                                            },
-                                                        ];
-
-                                                        wishesListDiv.innerHTML = preDefinedWishes.map(w =>
-                                                            `<div class="wish-item"><strong>${w.name}:</strong> ${w.message}</div>`
-                                                        ).join('');
-
-                                                        let scrollY = 0;
-                                                        let scrollInterval;
-
-                                                        function startScroll() {
-                                                            clearInterval(scrollInterval);
-                                                            scrollInterval = setInterval(() => {
-                                                                if (wishesContainer.classList.contains('is-minimized')) return;
-
-                                                                const parentHeight = scrollArea.offsetHeight;
-                                                                const listHeight = wishesListDiv.offsetHeight;
-                                                                if (listHeight <= parentHeight) return;
-
-                                                                scrollY -= 0.5;
-                                                                if (Math.abs(scrollY) >= listHeight) scrollY = parentHeight;
-                                                                wishesListDiv.style.transform = `translateY(${scrollY}px)`;
-                                                            }, 30);
-                                                        }
-
-                                                        startScroll();
-                                                        scrollArea.addEventListener('mouseenter', () => clearInterval(scrollInterval));
-                                                        scrollArea.addEventListener('mouseleave', startScroll);
-
-                                                        // 5. HIỆU ỨNG TIM RƠI
-                                                        function createHeart() {
-                                                            const heart = document.createElement("div");
-                                                            heart.className = "heart-falling";
-                                                            heart.innerHTML = "❤";
-                                                            heart.style.left = Math.random() * 100 + "vw";
-                                                            heart.style.fontSize = (Math.random() * 15 + 10) + "px";
-                                                            heart.style.animationDuration = (Math.random() * 4 + 3) + "s";
-                                                            const colors = ["#d4a373", "#e9c46a", "#f4a261", "#e76f51", "#ffb4a2"];
-                                                            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-                                                            document.body.appendChild(heart);
-                                                            setTimeout(() => heart.remove(), 7000);
-                                                        }
-                                                        setInterval(createHeart, 800);
-                                                    });
-                                                </script>
                                             </div>
                                         </div>
                                         <div class="et_pb_module et_pb_code et_pb_code_2">
-
-
-
-
                                             <div class="et_pb_code_inner">
-                                                <style>
-                                                    /* CSS định nghĩa trạng thái ẩn và hiện */
-
-                                                    .mh-fade-in {
-                                                        opacity: 0;
-                                                        transform: translateY(40px);
-                                                        /* Bắt đầu thấp hơn 40px */
-                                                        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-                                                        will-change: opacity, transform;
-                                                    }
-
-                                                    /* Lớp này sẽ được JS thêm vào khi người dùng cuộn tới */
-
-                                                    .mh-fade-in.is-visible {
-                                                        opacity: 1;
-                                                        transform: translateY(0);
-                                                    }
-
-                                                    /* Vô hiệu hóa hiệu ứng trên thiết bị ưu tiên giảm chuyển động (Accessibility) */
-
-                                                    @media (prefers-reduced-motion: reduce) {
-                                                        .mh-fade-in {
-                                                            transition: none;
-                                                            opacity: 1;
-                                                            transform: none;
-                                                        }
-                                                    }
-                                                </style>
-
-                                                <script>
-                                                    document.addEventListener('DOMContentLoaded', function() {
-                                                        // Tự động tìm tất cả các Section của Divi (.et_pb_section) hoặc thẻ <section>
-                                                        const elementsToAnimate = document.querySelectorAll('.et_pb_section, section, .et_pb_row');
-
-                                                        // Thêm class ẩn mặc định vào các phần tử tìm được
-                                                        elementsToAnimate.forEach(el => {
-                                                            el.classList.add('mh-fade-in');
-                                                        });
-
-                                                        // Cấu hình bộ theo dõi (Intersection Observer)
-                                                        const observerOptions = {
-                                                            root: null,
-                                                            rootMargin: '0px',
-                                                            threshold: 0.15 // Kích hoạt khi 15% phần tử xuất hiện trên màn hình
-                                                        };
-
-                                                        const observer = new IntersectionObserver((entries, observer) => {
-                                                            entries.forEach(entry => {
-                                                                if (entry.isIntersecting) {
-                                                                    // Thêm class hiện và ngừng theo dõi (để hiệu ứng chỉ chạy 1 lần)
-                                                                    entry.target.classList.add('is-visible');
-                                                                    observer.unobserve(entry.target);
-                                                                }
-                                                            });
-                                                        }, observerOptions);
-
-                                                        // Bắt đầu theo dõi tất cả các phần tử
-                                                        elementsToAnimate.forEach(el => {
-                                                            observer.observe(el);
-                                                        });
-                                                    });
-                                                </script>
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
-                </div>
-
-
             </article>
-
-
-
         </div>
 
         <div id="imageModal" class="image-modal">
             <span class="close-btn">&times;</span>
             <img class="modal-content" id="modalImage">
         </div>
-    <style>
-        .image-modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            padding-top: 60px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.9);
+    </div>
+    <script type="text/javascript">
+        jQuery(function($) {
+            var dipl_image_card_carousel_1_swiper = new Swiper('.dipl_image_card_carousel_1 .swiper-container', {
+                slidesPerView: 3,
+                autoplay: 0,
+                spaceBetween: 10,
+                slidesPerGroup: 1,
+                slidesPerGroupSkip: 2,
+                effect: "slide",
+                cubeEffect: false,
+                coverflowEffect: false,
+                speed: 1000,
+                loop: false,
+                pagination: false,
+                navigation: false,
+                grabCursor: 'true',
+                breakpoints: {
+                    981: {
+                        slidesPerView: 3,
+                        spaceBetween: 10,
+                        slidesPerGroup: 1,
+                        slidesPerGroupSkip: 2,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 10,
+                        slidesPerGroup: 1,
+                        slidesPerGroupSkip: 1,
+                    },
+                    0: {
+                        slidesPerView: 3,
+                        spaceBetween: 10,
+                        slidesPerGroup: 1,
+                        slidesPerGroupSkip: 2,
+                    }
+                },
+            });
+            dipl_image_card_carousel_1_swiper.on('reachEnd', function() {
+                dipl_image_card_carousel_1_swiper.autoplay = false;
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        jQuery(function($) {
+            var dipl_image_card_carousel_0_swiper = new Swiper('.dipl_image_card_carousel_0 .swiper-container', {
+                slidesPerView: 2,
+                autoplay: 0,
+                spaceBetween: 5,
+                slidesPerGroup: 1,
+                slidesPerGroupSkip: 1,
+                effect: "slide",
+                cubeEffect: false,
+                coverflowEffect: false,
+                speed: 1000,
+                loop: false,
+                pagination: false,
+                navigation: false,
+                grabCursor: 'true',
+                breakpoints: {
+                    981: {
+                        slidesPerView: 2,
+                        spaceBetween: 5,
+                        slidesPerGroup: 1,
+                        slidesPerGroupSkip: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 5,
+                        slidesPerGroup: 1,
+                        slidesPerGroupSkip: 1,
+                    },
+                    0: {
+                        slidesPerView: 2,
+                        spaceBetween: 5,
+                        slidesPerGroup: 1,
+                        slidesPerGroupSkip: 1,
+                    }
+                },
+            });
+            dipl_image_card_carousel_0_swiper.on('reachEnd', function() {
+                dipl_image_card_carousel_0_swiper.autoplay = false;
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- QUAN TRỌNG: Đưa các phần tử ra khỏi Divi Wrapper để tránh lỗi position ---
+            const overlay = document.getElementById('wedding-overlay');
+            const wishesContainer = document.getElementById('wedding-wishes-container');
+            const musicContainer = document.getElementById('wedding-music-container');
+
+            if (overlay) document.body.appendChild(overlay);
+            if (wishesContainer) document.body.appendChild(wishesContainer);
+            if (musicContainer) document.body.appendChild(musicContainer);
+
+            // Khóa cuộn trang ban đầu
+            document.body.classList.add('locked-scroll');
+
+            const audio = document.getElementById('wedding-audio-player');
+            const musicIcon = document.getElementById('divi-music-icon');
+            const musicText = document.getElementById('divi-music-text');
+            let isPlaying = false;
+
+            // 1. NÚT MỞ THIỆP & PHÁT NHẠC
+            document.getElementById('open-wedding-btn').addEventListener('click', function() {
+                // Ẩn Overlay
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.visibility = 'hidden';
+                    overlay.style.display = 'none';
+                    document.body.classList.remove('locked-scroll');
+                }, 800);
+
+                // Kích hoạt nhạc
+                audio.currentTime = 38; // Thêm dòng này để nhạc bắt đầu từ giây 11
+                audio.play().then(() => {
+                    isPlaying = true;
+                    musicIcon.classList.remove('is-paused');
+                    musicText.innerText = "Tắt Nhạc";
+                }).catch(e => console.log("Không thể phát nhạc tự động: ", e));
+            });
+
+            // 2. ĐIỀU KHIỂN NHẠC BẰNG TAY
+            document.getElementById('divi-music-btn').addEventListener('click', function() {
+                if (isPlaying) {
+                    audio.pause();
+                    musicIcon.classList.add('is-paused');
+                    musicText.innerText = "Bật Nhạc";
+                } else {
+                    audio.play();
+                    musicIcon.classList.remove('is-paused');
+                    musicText.innerText = "Tắt Nhạc";
+                }
+                isPlaying = !isPlaying;
+            });
+
+            // 3. THU GỌN / MỞ RỘNG SỔ LƯU BÚT
+            const toggleBtn = document.getElementById('wish-toggle-btn');
+            toggleBtn.addEventListener('click', function() {
+                wishesContainer.classList.toggle('is-minimized');
+                toggleBtn.innerText = wishesContainer.classList.contains('is-minimized') ? "+" : "−";
+            });
+
+            // 4. AUTO SCROLL SỔ LƯU BÚT
+            const wishesListDiv = document.getElementById('wishes-list');
+            const scrollArea = document.getElementById('wishes-scroll-area');
+            const preDefinedWishes = [{
+                name: "Chị Phượng",
+                message: "Chúc hai em trăm năm hạnh phúc, sớm sinh quý tử nhé!"
+            },
+                {
+                    name: "Chị Nguyệt",
+                    message: "Chúc hai em mãi yêu thương, thấu hiểu và đồng hành cùng nhau suốt chặng đường phía trước nhé!"
+                },
+                {
+                    name: "Chị Huyền",
+                    message: "Chúc em và người thương một cuộc sống hôn nhân thật viên mãn, luôn tràn đầy tiếng cười và hạnh phúc!"
+                },
+                {
+                    name: "Em Mẫn",
+                    message: "Chúc anh chị luôn hạnh phúc, sớm có tin vui và mãi mãi yêu nhau như thuở ban đầu ạ!"
+                },
+                {
+                    name: "Cậu Giang",
+                    message: "Chúc cô dâu chú rể mãi mãi yêu thương nhau."
+                },
+                {
+                    name: "Nhóm chị em FA",
+                    message: "Chúc hai bạn trăm năm tình viên mãn, tụi em xin vía hạnh phúc theo với nha 😄❤️"
+                },
+                {
+                    name: "Bạn Hoàn",
+                    message: "Chúc mừng hạnh phúc hai bạn! Đám cưới tuyệt vời quá."
+                },
+                {
+                    name: "Bạn Hưng",
+                    message: "Chúc hai bạn xây dựng gia đình êm ấm, thuận hòa."
+                },
+                {
+                    name: "Bạn Dương",
+                    message: "Chúc hai bạn trăm năm hạnh phúc."
+                },
+                {
+                    name: "Hội bạn thân",
+                    message: "Chúc rể mới dâu mới bách niên giai lão nha!!!"
+                },
+                {
+                    name: "Nhóm Thiên Thai",
+                    message: "Chúc hai bạn trăm năm hạnh phúc, ngọt ngào như những ngày đẹp nhất và luôn nắm tay nhau vượt qua mọi điều!"
+                },
+            ];
+
+            wishesListDiv.innerHTML = preDefinedWishes.map(w =>
+                `<div class="wish-item"><strong>${w.name}:</strong> ${w.message}</div>`
+            ).join('');
+
+            let scrollY = 0;
+            let scrollInterval;
+
+            function startScroll() {
+                clearInterval(scrollInterval);
+                scrollInterval = setInterval(() => {
+                    if (wishesContainer.classList.contains('is-minimized')) return;
+
+                    const parentHeight = scrollArea.offsetHeight;
+                    const listHeight = wishesListDiv.offsetHeight;
+                    if (listHeight <= parentHeight) return;
+
+                    scrollY -= 0.5;
+                    if (Math.abs(scrollY) >= listHeight) scrollY = parentHeight;
+                    wishesListDiv.style.transform = `translateY(${scrollY}px)`;
+                }, 30);
+            }
+
+            startScroll();
+            scrollArea.addEventListener('mouseenter', () => clearInterval(scrollInterval));
+            scrollArea.addEventListener('mouseleave', startScroll);
+
+            // 5. HIỆU ỨNG TIM RƠI
+            function createHeart() {
+                const heart = document.createElement("div");
+                heart.className = "heart-falling";
+                heart.innerHTML = "❤";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.fontSize = (Math.random() * 15 + 10) + "px";
+                heart.style.animationDuration = (Math.random() * 4 + 3) + "s";
+                const colors = ["#d4a373", "#e9c46a", "#f4a261", "#e76f51", "#ffb4a2"];
+                heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 7000);
+            }
+            setInterval(createHeart, 800);
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tự động tìm tất cả các Section của Divi (.et_pb_section) hoặc thẻ <section>
+            const elementsToAnimate = document.querySelectorAll('.et_pb_section, section, .et_pb_row');
+
+            // Thêm class ẩn mặc định vào các phần tử tìm được
+            elementsToAnimate.forEach(el => {
+                el.classList.add('mh-fade-in');
+            });
+
+            // Cấu hình bộ theo dõi (Intersection Observer)
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Kích hoạt khi 15% phần tử xuất hiện trên màn hình
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Thêm class hiện và ngừng theo dõi (để hiệu ứng chỉ chạy 1 lần)
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Bắt đầu theo dõi tất cả các phần tử
+            elementsToAnimate.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+    <script>
+        // Mở Modal
+        function openGiftModal() {
+            document.getElementById("giftModal").style.display = "flex";
+            // Khóa cuộn trang nền
+            document.body.style.overflow = "hidden";
         }
 
-        .modal-content {
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 80vh;
-            animation: zoomIn 0.3s ease;
+        // Đóng Modal
+        function closeGiftModal() {
+            document.getElementById("giftModal").style.display = "none";
+            // Mở khóa cuộn trang nền
+            document.body.style.overflow = "auto";
         }
 
-        @keyframes zoomIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        // Đóng khi click ra ngoài popup
+        window.onclick = function(event) {
+            var modal = document.getElementById("giftModal");
+            if (event.target == modal) {
+                closeGiftModal();
+            }
         }
 
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            color: white;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
+        // Chức năng Copy
+        function copyToClipboard(elementId, btnElement) {
+            // Lấy nội dung số tài khoản
+            var copyText = document.getElementById(elementId).innerText;
+
+            // Sử dụng API Clipboard hiện đại
+            navigator.clipboard.writeText(copyText).then(function() {
+                // Lưu text gốc nút
+                var originalText = btnElement.innerHTML;
+
+                // Đổi giao diện nút thành "Đã copy"
+                btnElement.innerHTML = "✓ Đã copy";
+                btnElement.classList.add("copied");
+
+                // Trả về trạng thái cũ sau 2 giây
+                setTimeout(function() {
+                    btnElement.innerHTML = originalText;
+                    btnElement.classList.remove("copied");
+                }, 2000);
+            }, function(err) {
+                alert("Lỗi khi copy: " + err);
+            });
         }
-    </style>
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var modal = document.getElementById("imageModal");
@@ -5195,8 +4933,6 @@
             };
         });
     </script>
-    </div>
-
     <script type="speculationrules">
         {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/Divi/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch,
         .no-prefetch a"}}]},"eagerness":"conservative"}]}
@@ -5269,5 +5005,4 @@
     <script type="text/javascript" src="./wp-content/plugins/divi-plus/includes/assets/js/imagesloaded.pkgd.min.js?ver=4.1.4" id="elicus-images-loaded-script-js"></script>
     <script type="text/javascript" src="./wp-content/plugins/divi-plus/includes/modules/MasonryGallery/dipl-masonry-gallery-custom.min.js?ver=1.0.0" id="dipl-masonry-gallery-custom-js"></script>
 </body>
-
 </html>
